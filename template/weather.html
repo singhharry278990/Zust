@@ -10,7 +10,8 @@
                     <div class="weather-image-wrap">
                         <a href="#"><img src="/static/assets/images/weather/weather-2.png" alt="`image"></a>
                     </div>
-
+                    <div id="weather-container1"></div>
+                    <div id="weather-container"></div>
                     <form class="weather-form">
                         <div class="title">
                             <h3>Search Location</h3>
@@ -20,26 +21,26 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Country and Timezone</label>
-                                    <input type="email" class="form-control">
+                                    <input type="text" id="country"  class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Forecast Days</label>
-                                    <input type="password" class="form-control">
+                                    <input type="text" id="forecast_days" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Temperature Unit</label>
-                                    <input type="password" class="form-control">
+                                    <input type="text" id="temperature" class="form-control">
                                 </div>
                             </div>
                             
                             <div class="col-lg-12 col-md-12">
-                                <button type="submit" class="default-btn">Check Weather</button>
+                                <button type="submit" id="weather-btn" class="default-btn">Check Weather</button>
                             </div>
                         </div>
                     </form>
@@ -47,3 +48,5 @@
             </div>
             <!-- End Content Page Box Area -->
 {% include 'footer.html' %}
+<script type="text/javascript" src="/static/assets/js/weather.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />

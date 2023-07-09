@@ -33,7 +33,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [ 
+    'daphne',
     'social_django',
     'channels',
     'django.contrib.admin',
@@ -75,7 +76,7 @@ TEMPLATES = [
 ]
 
 ASGI_APPLICATION = "social.asgi.application"
-# WSGI_APPLICATION = 'social.wsgi.application'
+WSGI_APPLICATION = 'social.wsgi.application'
 
 
 # Database
@@ -88,6 +89,16 @@ DATABASES = {
     }
 }
 
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -146,5 +157,5 @@ LOGOUT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'login'
 
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '317089508368-8apbe3lo8fd3jat7pm76th9e8e4kk8v6.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '833257245480-s2ium3pudbg5bpirjnn6766qlimsdf30.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
