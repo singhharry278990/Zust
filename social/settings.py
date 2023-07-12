@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [ 
+INSTALLED_APPS = [
     'daphne',
     'social_django',
     'channels',
@@ -88,7 +88,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 
 CHANNEL_LAYERS = {
@@ -153,8 +152,8 @@ AUTHENTICATION_BACKENDS = [
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
-LOGOUT_URL = 'index'
-LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '833257245480-s2ium3pudbg5bpirjnn6766qlimsdf30.apps.googleusercontent.com'

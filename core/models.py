@@ -20,6 +20,16 @@ class Profile(models.Model):
 	gen = (('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other'))
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
 	about_me = models.CharField(max_length=250, null=True)
+	blood_groups = models.CharField(max_length=10, null=True)
+	backup_email = models.EmailField()
+	Occupation = models.CharField(max_length=250, null=True)
+	Relation_status= models.CharField(max_length=50, null=True)
+	Website = models.CharField(max_length=50,null=True, blank=True)
+	language = models.CharField(max_length=30, null=True, blank=True)
+	city = models.CharField(max_length=30, null=True, blank=True)
+	state = models.CharField(max_length=30, null=True, blank=True)
+	country = models.CharField(max_length=30, null=True, blank=True)
+	mobile_no = models.CharField(max_length=30, null=True, blank=True)
 	birthday = models.DateField(null=True)
 	profile_pic = models.ImageField(upload_to = upload_profile_to, null=True, default = 'defaults/profile_pic.jpg')
 	cover_image = models.ImageField(upload_to = upload_cover_to, null = True, default= 'defaults/cover_image.jpg')
@@ -56,8 +66,7 @@ class Notification(models.Model):
 	message = models.CharField(max_length=500)
 	link = models.CharField(max_length=500)
 	seen = models.BooleanField(default=False)
- 
- 
+
 def upload_post_to(instance,filename):
 	return f'post_picture/{instance.user.username}/{filename}'
 

@@ -23,7 +23,7 @@
 		
 		<title>Zust - Social Community & Marketplace HTML Template</title>
 
-        <link rel="icon" type="image/png' %}" href="{% static '/assets/images/favicon.png' %}' %}" >
+        <link rel="icon" type="image/png' %}" href="{% static '/assets/images/favicon.png' %}" >
     </head>
 
     <body>
@@ -442,20 +442,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="option-item">
                                     <div class="dropdown profile-nav-item">
                                         <a href="#" class="dropdown-bs-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <div class="menu-profile">
                                                 <img src="{% static '/assets/images/user/user-1.jpg' %}" class="rounded-circle" alt="image">
-                                                <span class="name">Matthew</span>
+                                                <span class="name">{{user_obj.fullname}}</span>
                                                 <span class="status-online"></span>
                                             </div>
                                         </a>
 
                                         <div class="dropdown-menu">
                                             <div class="profile-header">
-                                                <h3>Matthew Turner</h3>
-                                                <a href="mailto:matthew507@gmail.com">matthew507@gmail.com</a>
+                                                <h3>{{user_obj.fullname}}</h3>  
+                                                <a href="mailto:matthew507@gmail.com">{{user_obj.email}}</a>
                                             </div>
                                             <ul class="profile-body">
                                             <li><i class="flaticon-user"></i> <a href="{% url 'profile' %}">My Profile</a></li>
@@ -722,15 +723,15 @@
                                             <a href="#" class="dropdown-bs-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <div class="menu-profile">
                                                     <img src="{% static '/assets/images/user/user-1.jpg' %}" class="rounded-circle" alt="image">
-                                                    <span class="name">Matthew</span>
+                                                    <span class="name">{{user_obj.username}}</span>
                                                     <span class="status-online"></span>
                                                 </div>
                                             </a>
                 
                                             <div class="dropdown-menu">
                                                 <div class="profile-header">
-                                                    <h3>Matthew Turner</h3>
-                                                    <a href="mailto:matthew507@gmail.com">matthew507@gmail.com</a>
+                                                    <h3>{{user_obj.fullname}}</h3>
+                                                    <a href="{{user_obj.email}}">{{user_obj.email}}</a>
                                                 </div>
                                                 <ul class="profile-body">
                                                     <li><i class="flaticon-user"></i> <a href="{% url 'profile' %}">My Profile</a></li>
