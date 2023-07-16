@@ -19,6 +19,7 @@ def upload_cover_to(instance,filename):
 class Profile(models.Model):
 	gen = (('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other'))
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
+	is_online = models.BooleanField(default=False)
 	about_me = models.CharField(max_length=250, null=True)
 	blood_groups = models.CharField(max_length=10, null=True)
 	backup_email = models.EmailField()

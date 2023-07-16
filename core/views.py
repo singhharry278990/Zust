@@ -21,29 +21,78 @@ def index(request):
     return render( request, 'index.html', {"user_obj":user_obj}  )
 
 def birthday(request):
-    return render( request, 'birthday.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+
+    return render( request, 'birthday.html',  {"user_obj":user_obj})
 
 def events(request):
-    return render( request, 'events.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+
+    return render( request, 'events.html',  {"user_obj":user_obj})
 
 def favorite(request):
-    return render( request, 'favorite.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+
+    return render( request, 'favorite.html',  {"user_obj":user_obj})
 
 def help_and_support(request):
-    return render( request, 'help-and-support.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+
+    return render( request, 'help-and-support.html',  {"user_obj":user_obj})
 
 def forget_password(request):
     print(request.POST)
-    return render( request, 'forgot-password.html')
+    return render( request, 'forgot-password.html' )
 
 def friends(request):
-    return render( request, 'friends.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+
+    return render( request, 'friends.html',  {"user_obj":user_obj})
 
 def groups(request):
-    return render( request, 'groups.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+
+    return render( request, 'groups.html',  {"user_obj":user_obj})
 
 def live_Chats(request):
-    return render( request, 'live-chat.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+
+    return render( request, 'live-chat.html',  {"user_obj":user_obj})
 
 @csrf_exempt
 def login(request):
@@ -61,16 +110,39 @@ def login(request):
                 return HttpResponseRedirect('index')
             else:
                 print("error")
-
     return render(request, 'login.html')
 
 
 def marketplace(request):
-    return render( request, 'marketplace.html')
+    user = User.objects.get(username=request.user.username)
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
 
+    return render( request, 'marketplace.html',  {"user_obj":user_obj})
 
+@login_required
 def messages(request):
-    return render( request, 'messages.html')
+    user = User.objects.get(username=request.user.username)
+    pro_obj = Profile.objects.get(user=user)
+
+    # Get the first username from the followers
+    followers_username = pro_obj.followers.values_list('username', flat=True).first()
+
+    # Get the first username from the following users
+    following_username = pro_obj.following.values_list('username', flat=True).first()
+    user_obj = {
+        'username': user.username,
+        'email': user.email,
+        'fullname': user.first_name + ' ' + user.last_name,
+        'following': following_username,
+        'followers': followers_username
+    }
+
+    return render(request, 'messages.html', {"user_obj": user_obj})
+
+
 
 def notifications(request):
     return render( request, 'notifications.html')
@@ -88,11 +160,23 @@ def myprofile(request):
 
 
 def notifications(request):
-    return render( request, 'notifications.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+    return render( request, 'notifications.html',  {"user_obj":user_obj})
 
 
 def privacy(request):
-    return render( request, 'privacy.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+    return render( request, 'privacy.html',  {"user_obj":user_obj})
 
 def register(request):
     if request.POST:
@@ -100,6 +184,7 @@ def register(request):
         email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
+        print(email, name, username, password)
         user_obj = User.objects.create(first_name=name, username=username, email=email)
         user_obj.set_password(password)
         user_obj.save()
@@ -107,15 +192,33 @@ def register(request):
     return render( request, 'register.html')
 
 def tryile(request):
-    return render( request, 'tryile.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+    return render( request, 'tryile.html',  {"user_obj":user_obj})
 
 
 def video(request):
-    return render( request, 'video.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+    return render( request, 'video.html',  {"user_obj":user_obj})
 
 
 def weather(request):
-    return render( request, 'weather.html')
+    user = User.objects.get(username=request.user.username)
+    
+    user_obj = {'username': user.username,
+                'email': user.email,
+                'fullname':user.first_name + ' ' + user.last_name
+                }
+    return render( request, 'weather.html',  {"user_obj":user_obj})
 @login_required
 def setting(request):
   
@@ -139,7 +242,6 @@ def test(request):
 def room(request, room_name):
     return render(request, "room.html", {"room_name": room_name})
 
-from django.http import JsonResponse
 
 def personal_info_view(request):
     if request.method == 'POST':
