@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from .models import *
+from django.http import JsonResponse
 # Create your views here.
 
 @login_required
@@ -150,13 +151,20 @@ def notifications(request):
 
 def myprofile(request):
     user = User.objects.get(username=request.user.username)
-    
-    user_obj = {'username': user.username,
-                'email': user.email,
-                'fullname':user.first_name + ' ' + user.last_name
-                }
+    if user:
+        pro_obj = Profile.objects.get(user=user)
 
-    return render( request, 'my-profile.html', {"user_obj":user_obj}  )
+        user_obj = {
+            'username': user.username,
+            'email': user.email,
+            'fullname': user.first_name + ' ' + user.last_name,
+            'profile_pic_url': pro_obj.profile_pic.url,
+            'cover_image_url': pro_obj.cover_image.url,
+            "profile": pro_obj,
+        }
+
+    
+    return render( request, 'my-profile.html', {"user_obj":user_obj})
 
 
 def notifications(request):
@@ -274,3 +282,29 @@ def personal_info_view(request):
 
             # Return a JSON response indicating success
             return JsonResponse({'message': 'Data received successfully'})
+
+
+
+
+
+def uploaded_image_view(request):
+    if request.method == 'POST' and request.FILES.get('imageFile'):
+        image_file = request.FILES['imageFile']
+        user = User.objects.get(username=request.user.username)
+        imageText = request.POST.get("imageText")
+        print("Image:", request.POST)
+        if user and image_file != '':
+            pro_obj = Profile.objects.get_or_create(user=user)[0]
+            if user and imageText:
+                pro_obj.cover_image = image_file
+            else:
+                pro_obj.profile_pic = image_file
+
+            pro_obj.save()
+
+            return JsonResponse({'message': 'Image uploaded successfully'})
+        else:
+            return JsonResponse({'message': 'Upload the image again'})
+    else:
+        return JsonResponse({'message': 'Image upload failed'})
+

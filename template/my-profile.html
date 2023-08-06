@@ -6,19 +6,18 @@
                 <div class="my-profile-inner-box">
                     <div class="profile-cover-image">
                         <a href="#">
-                            <img src="{% static '/assets/images/my-profile-bg.jpg' %}" alt="image">
+                            <img src="{{ user_obj.cover_image_url }}" style="width: auto;" alt="Cover Image">
                         </a>
-                        <a href="#" class="edit-cover-btn">Edit Cover</a>
+                        <a href="#"  class="edit-cover-btn uploadIcon" data-toggle="modal" data-target="#myModal">Edit Cover</a>
                     </div>
-
                     <div class="profile-info-box">
                         <div class="inner-info-box d-flex justify-content-between align-items-center">
                             <div class="info-image">
                                 <a href="#">
-                                    <img src="{% static '/assets/images/my-profile.jpg' %}" alt="image">
+                                    <img src="{{ user_obj.profile_pic_url }}" alt="Profile Picture">
                                 </a>
                                 <div class="icon">
-                                    <a href="#"><i class="flaticon-photo-camera"></i></a>
+                                    <label><a href="#" ><i class="flaticon-photo-camera uploadIcon1" data-toggle="modal" data-target="#myModal"></i></a></label>
                                 </div>
                             </div>
                             <div class="info-text ms-3">
@@ -3170,4 +3169,106 @@
                 </div>
             </div>
             <!-- End Content Page Box Area -->
-{% include 'footer.html'  %}
+          <!--Modal Section start-->
+<div class="modal" id="myModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Image Upload</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="imageForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="imageFile" id="imageFile">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" id="upload-btn" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Your other HTML content -->
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+  <script>
+    var uploadIcon = document.querySelector('.uploadIcon');
+    var uploadIcon1 = document.querySelector('.uploadIcon1');
+
+    // Add event listeners for both buttons
+    uploadIcon.addEventListener('click', openModal);
+    uploadIcon1.addEventListener('click', openModal);
+
+    function openModal(e) {
+        e.preventDefault();
+        // Display the modal
+        var modal = new bootstrap.Modal(document.getElementById('myModal'));
+        modal.show();
+    }
+
+    // Get the form and input elements
+    var form = document.getElementById('imageForm');
+    var fileInput = document.getElementById('imageFile');
+    var uploadBtn = document.getElementById('upload-btn');
+
+    // Add event listener for form submission
+    uploadBtn.addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        // Create FormData object
+        var formData = new FormData(form);
+
+        // Get the image text value based on which button was clicked
+        var imageText;
+        if (e.target === uploadIcon) {
+            imageText = uploadIcon.textContent;
+        } else {
+            imageText = ''; // Empty string if uploadIcon1 was clicked
+        }
+
+        // Add the image text field to the form data
+        formData.append('imageText', imageText);
+
+        // Send the form data to the Django view using AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '{% url "uplaod_image" %}', true);
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // Request succeeded
+                console.log(xhr.responseText);
+                var modal = bootstrap.Modal.getInstance(document.getElementById('myModal'));
+                modal.hide(); // Close the modal after form submission
+            } else {
+                // Request failed
+                console.error(xhr.responseText);
+            }
+        };
+        xhr.send(formData);
+    });
+
+    // Helper function to retrieve the CSRF token value from cookies
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Extract the CSRF token value
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+  
+{% include 'footer.html' %}
+
+  

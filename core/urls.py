@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from core import views
 
+
 urlpatterns = [
 
     path('index/',views.index, name='index'),
@@ -22,7 +23,7 @@ urlpatterns = [
     path('setting/',views.setting, name='setting'),
     path('tryile/',views.tryile, name='tryile'),
     path('video/',views.video, name='video'),
-    # path('test/',views.test, name='test'),
+    path('uplaod_image/',views.uploaded_image_view, name='uplaod_image'),
     # path("<str:room_name>/", views.room, name="room"),
     path('logout/',views.logout_view, name='logout'),
     path('weather/',views.weather, name='weather'),
